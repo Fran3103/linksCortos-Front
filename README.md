@@ -1,10 +1,3 @@
-landig
-
-
-ChatGPT Plus
-markdown
-Copiar
-Editar
 # Links Cortos
 
 **¿Qué es la API Links Cortos?**  
