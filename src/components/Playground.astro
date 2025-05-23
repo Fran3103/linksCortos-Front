@@ -31,7 +31,7 @@
     resultDiv.textContent = "Acortando…";
 
     try {
-      const res = await fetch("http://localhost:8080/shorten", {
+      const res = await fetch("https://linkscortos-1.onrender.com/shorten", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: longUrl }),
@@ -39,7 +39,7 @@
       if (!res.ok) throw new Error(`Error ${res.status}`);
       const body = await res.json();
 
-      const urlShort = `http://localhost:8080/${body.code}`;
+      const urlShort = `https://linkscortos-1.onrender.com/${body.code}`;
 
       console.log(urlShort);
       resultDiv.innerHTML = `
@@ -49,7 +49,7 @@
           <a id="shortUrl" href="${urlShort}" target="_blank" class="text-blue-600 hover:underline">
             ${urlShort}
           </a> 
-          <img id="imgCopy" src="/copy16.png" alt="Copiar url" class=" hover:invert-50 hover:cursor-pointer" title="Copiar URL" />
+          <img id="imgCopy" src="/copy16.webp" alt="Copiar url" class=" hover:invert-50 hover:cursor-pointer w-4" title="Copiar URL" />
         </div>
       
         `;
@@ -60,9 +60,10 @@
         try {
           await navigator.clipboard.writeText(shortUrlEl.href);
           // Feedback (puedes cambiar por un toast, etc.)
-          imgCopy.src = "/check.svg";
+          imgCopy.src = "/check.webp";
+          imgCopy.alt = "Copiado";
           setTimeout(() => {
-            imgCopy.src = "/copy16.png"
+            imgCopy.src = "/copy16.webp";
             imgCopy.alt = "Copiado";
             imgCopy.title = "Copiado!";
           }, 4000);
