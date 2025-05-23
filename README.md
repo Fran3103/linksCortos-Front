@@ -3,6 +3,9 @@
 **¿Qué es la API Links Cortos?**  
 Genera URLs breves y personalizadas a partir de enlaces largos con una sola petición HTTP. Ideal para compartir en redes, correos o en tus propias aplicaciones.
 
+
+# Utiliza la api https://github.com/Fran3103/linkscortos 
+
 ---
 
 ## Playground  
