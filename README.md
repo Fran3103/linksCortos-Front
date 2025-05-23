@@ -35,3 +35,26 @@
    ```bash
    git clone https://github.com/tu-usuario/links-cortos.git
    cd links-cortos
+## Configura la URL base en local:
+
+  # src/main/resources/application-local.properties
+  app.base-url=http://localhost:8080
+  spring.profiles.active=local
+
+## Instala dependencias y arranca los dos servicios:
+
+# Backend (Spring Boot + H2)
+    mvn clean package
+    mvn spring-boot:run -Dspring.profiles.active=local
+
+
+## Frontend (Astro)
+    cd frontend
+    npm install
+    npm run dev
+## 🎮 Uso
+# Playground
+    Pega tu URL larga en el campo Pega tu URL larga.
+    Haz clic en Cortar.
+
+    Tu enlace corto aparecerá con un botón de tijeras para copiarlo al portapapeles.
