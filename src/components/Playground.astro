@@ -1,0 +1,78 @@
+---
+
+---
+
+<h4>Proba la Api</h4>
+<div class="py-6 mb-6 md:p-6 rounded shadow-md max-w-xl mx-auto">
+  <form id="shorten-form" class="flex gap-2">
+    <input
+      id="longUrl"
+      type="url"
+      placeholder="Pega tu URL larga"
+      required
+      class="flex-1 p-2 border rounded"
+    />
+    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">
+      Cortar
+    </button>
+  </form>
+
+  <div id="result" class="mt-4 text-gray-400">Aquí aparecerá tu URL corta.</div>
+</div>
+
+<script type="module" is:inline>
+  const form = document.getElementById("shorten-form");
+  const input = document.getElementById("longUrl");
+  const resultDiv = document.getElementById("result");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const longUrl = input.value;
+    resultDiv.textContent = "Acortando…";
+
+    try {
+      const res = await fetch("http://localhost:8080/shorten", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: longUrl }),
+      });
+      if (!res.ok) throw new Error(`Error ${res.status}`);
+      const body = await res.json();
+
+      const urlShort = `http://localhost:8080/${body.code}`;
+
+      console.log(urlShort);
+      resultDiv.innerHTML = `
+        
+        <div id="insert" class="flex items-center gap-2 justify-center">
+          <p class="text-gray-200">Tu URL corta es:</p>
+          <a id="shortUrl" href="${urlShort}" target="_blank" class="text-blue-600 hover:underline">
+            ${urlShort}
+          </a> 
+          <img id="imgCopy" src="/copy16.png" alt="Copiar url" class=" hover:invert-50 hover:cursor-pointer" title="Copiar URL" />
+        </div>
+      
+        `;
+
+      const imgCopy = document.getElementById("imgCopy");
+      const shortUrlEl = document.getElementById("shortUrl");
+      imgCopy.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(shortUrlEl.href);
+          // Feedback (puedes cambiar por un toast, etc.)
+          imgCopy.src = "/check.svg";
+          setTimeout(() => {
+            imgCopy.src = "/copy16.png"
+            imgCopy.alt = "Copiado";
+            imgCopy.title = "Copiado!";
+          }, 4000);
+        } catch (err) {
+          console.error("Error copiando al portapapeles:", err);
+        }
+      });
+    } catch (err) {
+      resultDiv.textContent = "¡Ups! No se pudo acortar.";
+      console.error(err);
+    }
+  });
+</script>

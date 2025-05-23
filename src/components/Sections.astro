@@ -1,0 +1,116 @@
+---
+import Playground from "../components/Playground.astro";
+---
+
+<div class="container mx-auto p-4   text-gray-50 mb-20 max-w-4xl ">
+  <div class="flex  items-center  justify-center mt-5 mb-9 gap-5">
+    <h1 class="text-center text-3xl md:text-5xl">Links Cortos</h1>
+    <img src="/linkTijera.png" alt="icono de tijera" class="w-12 h-12  md:w-16 md:h-16  " />
+  </div>
+  <!-- Sección 1: Introducción -->
+  <section class="mb-12" >
+    <h2 class="text-3xl font-semibold mb-4">¿Qué es la API Links Cortos?</h2>
+    <p >
+      Esta API te permite generar URLs cortas a partir de una URL larga con solo
+      enviar una petición HTTP. <br>Ideal para compartir en redes, correos o tus
+      propias aplicaciones.
+    </p>
+  </section>
+  <!-- Sección 3: Playground interactivo -->
+  <section class="mb-12" >
+    <h2 class="text-2xl font-semibold mb-4">Playground</h2>
+    <Playground />
+  </section>
+  <!-- Sección 2: Endpoints -->
+  <section class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4">Endpoints</h2>
+
+    <article class="mb-6">
+      <h3 class="font-medium">
+        POST <span>https://linkscortos-1.onrender.com/shorten</span>
+      </h3>
+
+      <!-- Descripción de la solicitud -->
+      <p class="my-3 leading-loose">
+        Para acortar un enlace, realiza una petición HTTP <strong>POST</strong> al
+        endpoint
+        <span>https://linkscortos-1.onrender.com/shorten</span> en tu dominio.<br>  Asegúrate
+        de incluir la cabecera
+        <span>Content-Type: application/json</span>
+        y de enviar un <em>body</em> en formato JSON con la propiedad <span
+          >url</span
+        >.
+      </p>
+
+      <!-- Parámetros -->
+      <p class="font-medium mb-2">Parámetros:</p>
+      <ul class="list-disc list-inside mb-4">
+        <li>
+          <span>url</span>
+          <span class="font-medium">string</span> (requerido): La URL larga que deseas
+          acortar. Debe comenzar con <span>http://</span> o <span>https://</span
+          >.
+        </li>
+      </ul>
+
+      <!-- Ejemplo de solicitud -->
+      <p class="font-medium mb-2">Ejemplo de solicitud (curl):</p>
+      <pre
+        class="bg-blue-100 p-4 rounded overflow-auto mb-2">
+  <code class="text-black">{`curl -X POST https://linkscortos-1.onrender.com/shorten
+    -H "Content-Type: application/json" 
+    -d '{ "url": "https://ejemplo.com/enlace-muy-largo" }'`}</code>
+      </pre>
+    </article>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4">Respuesta</h2>
+    <p class="my-3">La API devuelve un objeto JSON con la información de la URL acortada:</p>
+    <ul class="list-disc list-inside mb-4 flex flex-col gap-3 ">
+      <li>
+        <span>id</span>
+        <span class="font-bold">number</span>: Identificador único interno del
+        registro.
+      </li>
+      <li>
+        <span>urlOriginal</span>
+        <span class="font-bold">string</span>: La URL larga que se envió en la
+        petición.
+      </li>
+      <li>
+        <span>code</span>
+        <span class="font-bold">string</span>: Código alfanumérico generado
+        para la URL corta.
+      </li>
+      <li>
+        <span>localDateTime</span>
+        <span class="font-bold">string</span>: Fecha y hora de creación, en
+        formato ISO 8601 (<span>YYYY-MM-DDThh:mm:ss</span>).
+      </li>
+      <li>
+        <span>clickCount</span>
+        <span class="font-bold">number</span>: Número de veces que se ha
+        accedido al enlace corto.
+      </li>
+      <li>
+        <span>urlShort</span>
+        <span class="font-bold">string</span>: La URL completa y acortada
+        (dominio + <span>code</span>).
+      </li>
+    </ul>
+
+    <p class="font-medium mb-2">Ejemplo de respuesta (200 OK):</p>
+    <pre
+      class="bg-blue-100 p-4 rounded overflow-auto">
+  <code class="text-black">{`{
+    "id": 42,
+    "urlOriginal": "https://ejemplo.com/enlace-muy-largo",
+    "code": "hG12Sa",
+    "localDateTime": "2025-05-16T12:00:00",
+    "clickCount": 20,
+    "urlShort": "https://linkscortos-1.onrender.com/hG12Sa"
+  }`}</code>
+    </pre>
+  </section>
+</div>
